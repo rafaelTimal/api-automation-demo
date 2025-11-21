@@ -1,40 +1,41 @@
 pipeline {
     agent any
 
-    environment {
-        MAVEN_OPTS = "-Dmaven.test.failure.ignore=false"
+    tools {
+        jdk 'jdk25'
+        maven 'maven3.9.11'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/tuusuario/api-automation-demo.git'
+                git branch: 'main', url: 'https://github.com/rafaelTimal/api-automation-demo.git'
             }
         }
 
-        stage('Build & Test') {
+        stage('Build') {
             steps {
-                sh 'mvn clean test'
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Report') {
+        stage('Run Tests') {
             steps {
-                junit 'target/surefire-reports/*.xml'
-                echo 'Tests ejecutados, generando reporte...'
+                sh 'mvn test'
+            }
+        }
+
+        stage('Reports') {
+            steps {
+                junit '**/target/surefire-reports/*.xml'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/**/*.json, target/**/*.xml, target/site/**', allowEmptyArchive: true
-        }
-        success {
-            echo '✅ Pipeline completado con éxito.'
-        }
-        failure {
-            echo '❌ El pipeline falló. Revisa los logs de ejecución.'
+            echo 'Pipeline finalizado — limpiando workspace.'
+            cleanWs()
         }
     }
 }
