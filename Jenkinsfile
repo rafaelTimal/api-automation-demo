@@ -45,6 +45,19 @@ pipeline {
             }
         }
 
+        stage('Cucumber Report') {
+            steps {
+                cucumber buildStatus: 'UNSTABLE',
+                         fileIncludePattern: '**/cucumber-reports/*.json',
+                         sortingMethod: 'ALPHABETICAL',
+                         classifications: [
+                             ['Platform', 'Windows'],
+                             ['Environment', 'QA']
+                         ]
+            }
+        }
+
+
 
     }
 
