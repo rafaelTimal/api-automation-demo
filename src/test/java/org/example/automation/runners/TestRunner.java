@@ -12,7 +12,7 @@ import org.testng.annotations.AfterSuite;
                 "pretty",
                 "summary",
                 "html:target/cucumber-report.html",
-                "json:target/cucumber.json"
+                "json:target/cucumber-reports/cucumber.json"
         }
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

@@ -11,7 +11,7 @@ public class ReportGenerator {
     public static void generateReport(){
         File outputDir =new File("target/cucumber-reports");
         Configuration config = new Configuration(outputDir, "Title Automation Suite");
-        ReportBuilder builder = new ReportBuilder(Collections.singletonList("target/cucumber.json"),config);
+        ReportBuilder builder = new ReportBuilder(Collections.singletonList("target/cucumber-reports/cucumber.json"),config);
         builder.generateReports();
     }
 }
