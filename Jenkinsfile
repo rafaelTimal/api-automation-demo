@@ -38,12 +38,13 @@ pipeline {
                     allowMissing: true,
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
-                    reportDir: 'target/surefire-reports',
-                    reportFiles: 'index.html',
-                    reportName: 'Test Execution Report'
+                    reportDir: 'target/site',
+                    reportFiles: 'surefire-report.html',
+                    reportName: 'Test HTML Report'
                 ])
             }
         }
+
 
     }
 
