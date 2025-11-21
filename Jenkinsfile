@@ -31,6 +31,20 @@ pipeline {
                 junit '**/target/surefire-reports/*.xml'
             }
         }
+
+        stage('HTML Report') {
+            steps {
+                publishHTML(target: [
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target/surefire-reports',
+                    reportFiles: 'index.html',
+                    reportName: 'Test Execution Report'
+                ])
+            }
+        }
+
     }
 
     post {
