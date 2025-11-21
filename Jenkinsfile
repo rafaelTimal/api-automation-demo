@@ -2,12 +2,13 @@ pipeline {
     agent any
 
     tools {
-        // Usa el nombre que configuraste en Jenkins → Java 21
+        // Usa el nombre exacto configurado en Jenkins (Manage Jenkins → Global Tool Configuration)
         jdk 'jdk21'
         maven 'maven3.9.11'
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/rafaelTimal/api-automation-demo.git'
@@ -26,7 +27,7 @@ pipeline {
             }
         }
 
-        stage('Reports') {
+        stage('JUnit Report') {
             steps {
                 junit '**/target/surefire-reports/*.xml'
             }
@@ -51,14 +52,11 @@ pipeline {
                          fileIncludePattern: '**/cucumber-reports/*.json',
                          sortingMethod: 'ALPHABETICAL',
                          classifications: [
-                             ['Platform', 'Windows'],
-                             ['Environment', 'QA']
+                             [key: 'Platform', value: 'Windows'],
+                             [key: 'Environment', value: 'QA']
                          ]
             }
         }
-
-
-
     }
 
     post {
